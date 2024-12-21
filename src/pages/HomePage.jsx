@@ -4,8 +4,8 @@ import Slider from '../fragment/SliderTopAnime'
 import HightLightAnime from '../fragment/HightLightAnime'
 import Ongoing from '../fragment/Ongoing'
 import RecommendAnime from '../fragment/RecommendAnime'
-import UpComing from '../fragment/upComing'
 import TopChara from '../fragment/TopChara'
+import UpComing from '../fragment/UpComing'
 
 function HomePage() {
     const { popularAnime, loading, searchAnime, upComingAnime, onGoing, recommendationsAnime, topCharacters } = useAnimeData()
