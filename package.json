@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "deploy": "gh-pages -d dist",
+    "deploy": "git add . && git commit -m 'Deploy' && git push",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
