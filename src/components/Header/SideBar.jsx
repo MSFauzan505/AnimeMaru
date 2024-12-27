@@ -4,12 +4,12 @@ import HeaderItems from './HeaderItems'
 import { FiAlignJustify } from "react-icons/fi";
 import profile from '../../assets/images/profile.png'
 
-function SideBar({ navigation }) {
+function SideBar({ navigation, onLogOut, username }) {
   const [tonggle2, setToggle2] = useState(false)
-  
+
   return (
-    <div className='sm:hidden text-4xl'>
-      <HeaderItems  Icon={FiAlignJustify} name={''} onclick={() => setToggle2(!tonggle2)} />
+    <div className='md:hidden text-4xl'>
+      <HeaderItems Icon={FiAlignJustify} name={''} onclick={() => setToggle2(!tonggle2)} />
       <div
         className={`fixed top-0 right-0 h-full w-64 bg-slate-900 shadow-lg z-50 
                         ${tonggle2 ? 'translate-x-0' : 'translate-x-full'}
@@ -22,8 +22,12 @@ function SideBar({ navigation }) {
           >
             &times;
           </button>
-          <div className='flex justify-center'>
-            <img src={profile} className='w-20 cursor-pointer' />
+          <div className='flex justify-center flex-col'>
+            <img src={profile} className='block cursor-pointer w-20 mx-auto' />
+            <div className='flex text-white flex-col items-center gap-1'>
+              <p className='text-xl font-semibold'>{username}</p>
+              <button type='submit' className='font-light text-[20px] text-red-400 hover:text-red-500' onClick={onLogOut}>Log Out</button>
+            </div>
           </div>
           {navigation.map((item, index) => (
             <HeaderItems path={item.path} key={index} name={item.name} Icon={item.icon} />

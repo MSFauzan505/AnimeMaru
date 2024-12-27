@@ -2,10 +2,10 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../fragment/Footer';
 
-function MainLayout({ children }) {
+function MainLayout({ children, onLogOut }) {
   return (
     <>
-      <Header />
+      <Header onLogOut={onLogOut}/>
       <main>{children}</main>
       <Footer />
     </>

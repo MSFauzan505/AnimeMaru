@@ -6,7 +6,8 @@ import Logo from './Logo';
 import profile from '../../assets/images/profile.png'
 import SideBar from './SideBar';
 
-function NavigationMenu() {
+function NavigationMenu({ onLogOut }) {
+    const username = localStorage.getItem('username')
     const [tonggle, setToggle] = useState(false)
     const navigation = [
         { name: 'HOME', icon: HiHome, path: '/' },
@@ -48,8 +49,15 @@ function NavigationMenu() {
                         </div>
                     </div>
                 </div>
-                <img src={profile} className='hidden sm:block cursor-pointer' />
-                <SideBar navigation={navigation} />
+                <div className='flex items-center gap-4'>
+                    <div className='hidden md:flex text-white flex-col items-end gap-1'>
+                        <p className='text-lg font-semibold'>{username}</p>
+                        <button type='submit' className='font-light text-red-400 hover:text-red-500' onClick={onLogOut}>Log Out</button>
+                    </div>
+                    <img src={profile} className='hidden md:block cursor-pointer' />
+                </div>
+
+                <SideBar navigation={navigation} onLogOut={onLogOut} username={username}/>
             </div>
         </div>
     )

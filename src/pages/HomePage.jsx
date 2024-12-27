@@ -7,11 +7,11 @@ import RecommendAnime from '../fragment/RecommendAnime'
 import TopChara from '../fragment/TopChara'
 import UpComing from '../fragment/UpComing'
 
-function HomePage() {
+function HomePage({onLogOut}) {
     const { popularAnime, loading, searchAnime, upComingAnime, onGoing, recommendationsAnime, topCharacters } = useAnimeData()
     
     return (
-        <MainLayout className='font-poppins'>
+        <MainLayout className='font-poppins' onLogOut={onLogOut}>
             <Slider popularAnime={popularAnime} loading={loading}/>
             <HightLightAnime popularAnime={popularAnime}/>
             <RecommendAnime recommendationsAnime={recommendationsAnime} loading={loading}/>
