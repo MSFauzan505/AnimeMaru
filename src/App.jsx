@@ -6,48 +6,70 @@ import UpComingPage from "./pages/UpComingPage";
 import WatchListPage from "./pages/WatchListPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import useAnimeData from "./hooks/useAnimeData";
 
 function App() {
+  const { popularAnime, loading, searchAnime, upComingAnime, onGoing, recommendationsAnime, topCharacters } = useAnimeData();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Cek status login saat aplikasi pertama kali dimuat
   useEffect(() => {
-    const loginStatus = localStorage.getItem("isLoggedIn");
-    if (loginStatus === "true") {
-      setIsLoggedIn(true);
-    }
+    const loginStatus = localStorage.getItem("isLoggedIn") === "true";
+    setIsLoggedIn(loginStatus);
   }, []);
 
   const handleLogin = (status) => {
-    if (status) {
-      setIsLoggedIn(true);
-      localStorage.setItem("isLoggedIn", "true"); // Simpan status login di localStorage
-    } else {
-      console.log("Login gagal");
-      setIsLoggedIn(false);
-      localStorage.removeItem("isLoggedIn"); // Hapus status login jika gagal
-    }
+    setIsLoggedIn(status);
+    localStorage.setItem("isLoggedIn", status ? "true" : "false");
   };
 
-  const handleLogOut = ()=>{
+  const handleLogOut = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("isLoggedIn");
-  }
+  };
 
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path="/"
-          element={isLoggedIn ? <HomePage onLogOut={handleLogOut}/> : <Navigate to="/login" />}
+          element={isLoggedIn ? (
+            <HomePage 
+              onLogOut={handleLogOut} 
+              popularAnime={popularAnime} 
+              loading={loading}
+              searchAnime={searchAnime} 
+              upComingAnime={upComingAnime}
+              onGoing={onGoing}
+              recommendationsAnime={recommendationsAnime} 
+              topCharacters={topCharacters}
+            />
+          ) : (
+            <Navigate to="/login" />
+          )}
         />
         <Route
           path="/login"
           element={isLoggedIn ? <Navigate to="/" /> : <Login onLogin={handleLogin} />}
         />
         <Route path="/register" element={<Register />} />
-        <Route path="/home" element={isLoggedIn ? <HomePage onLogOut={handleLogOut}/> : <Navigate to="/login" />} />
-        <Route path="/popular" element={isLoggedIn ? <PopularPage /> : <Navigate to="/login" />} />
+        <Route
+          path="/home"
+          element={isLoggedIn ? (
+            <HomePage 
+              onLogOut={handleLogOut} 
+              popularAnime={popularAnime} 
+              loading={loading}
+              searchAnime={searchAnime} 
+              upComingAnime={upComingAnime}
+              onGoing={onGoing}
+              recommendationsAnime={recommendationsAnime} 
+              topCharacters={topCharacters}
+            />
+          ) : (
+            <Navigate to="/login" />
+          )}
+        />
+        <Route path="/popular" element={isLoggedIn ? <PopularPage popularAnime={popularAnime}/> : <Navigate to="/login" />} />
         <Route path="/upcoming" element={isLoggedIn ? <UpComingPage /> : <Navigate to="/login" />} />
         <Route path="/watchlist" element={isLoggedIn ? <WatchListPage /> : <Navigate to="/login" />} />
       </Routes>
